@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         display: "flex",
         flexDirection: 'row',
+        elevation: 5,
+        marginTop: 5,
     },
     searchIcon: {
         height: '100%',

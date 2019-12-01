@@ -90,12 +90,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
+
     },
     name: {
         fontFamily: 'DaysOne-Regular',
         color: '#4299A1',
         fontSize: 24,
         textTransform: 'uppercase',
+
 
     },
     priceSection: {
@@ -167,6 +169,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#4299A1',
         justifyContent: 'center',
         alignItems: 'center',
+        elevation: 10,
     },
     addButtonText: {
         fontFamily: 'DaysOne-Regular',

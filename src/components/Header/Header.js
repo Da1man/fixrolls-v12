@@ -30,7 +30,6 @@ const Header = (props) => {
 
 const styles = StyleSheet.create({
     wrapper: {
-        //backgroundColor: 'gray',
         height: 52,
         display: "flex",
         flexDirection: 'row',
