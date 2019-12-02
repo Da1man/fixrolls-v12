@@ -53,6 +53,7 @@ class CatalogScreen extends React.Component {
                             decCount={() => {
                                 this.props.decCount(p.id);
                             }}
+                            toCartLink={()=> this.props.navigation.navigate('Cart')}
                         />)
                     }
                 </ScrollView>

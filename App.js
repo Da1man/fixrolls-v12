@@ -34,7 +34,7 @@ class App extends React.Component {
 
 const BottomTabNavigator = createMaterialTopTabNavigator(
     {
-        MyTasks: {
+        Catalog: {
             screen: CatalogScreen,
             navigationOptions: {
                 title: 'catalog',
@@ -42,7 +42,7 @@ const BottomTabNavigator = createMaterialTopTabNavigator(
                 tabBarIcon: ({tintColor}) => (<Icon name='list' size={25} color={tintColor}/>),
             },
         },
-        Projects: {
+        Cart: {
             screen: CartScreen,
             navigationOptions: {
                 title: 'cart',
@@ -58,7 +58,7 @@ const BottomTabNavigator = createMaterialTopTabNavigator(
         },
         activeColor: '#4299A1',
         inactiveColor: 'white',
-        initialRouteName: 'MyTasks',
+        initialRouteName: 'Catalog',
         swipeEnabled: true,
         animationEnabled: true,
         shifting: true,

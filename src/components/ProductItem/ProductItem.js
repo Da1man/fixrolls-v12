@@ -28,18 +28,21 @@ const ProductItem = (props) => {
 
                 </View>
                 <View style={styles.priceSection}>
-                    {props.discountPrice != null && <Text style={styles.priceOld}>{props.price} руб</Text> }
-                    {props.discountPrice != null && <Text style={styles.priceSale}>{props.discountPrice} руб</Text> }
-                    {props.discountPrice === null && <Text style={styles.price}>{props.price} руб </Text> }
+                    {props.discountPrice != null
+                        ? <><Text style={styles.priceOld}>{props.price} руб</Text><Text
+                            style={styles.priceSale}>{props.discountPrice} руб</Text></>
+                        : props.discountPrice === null && <Text style={styles.price}>{props.price} руб </Text>
+                    }
+
                 </View>
                 <View style={styles.addToCartSection}>
                     <View style={styles.addCounter}>
                         {
                             props.count === 1
-                        ?  <View style={styles.decrement}>
-                                <Text style={styles.counterTextLock}>-</Text>
-                            </View>
-                        : <TouchableOpacity style={styles.decrement} onPress={props.decCount}>
+                                ? <View style={styles.decrement}>
+                                    <Text style={styles.counterTextLock}>-</Text>
+                                </View>
+                                : <TouchableOpacity style={styles.decrement} onPress={props.decCount}>
                                     <Text style={styles.counterText}>-</Text>
                                 </TouchableOpacity>
                         }
@@ -52,7 +55,7 @@ const ProductItem = (props) => {
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={styles.addButton}>
-                        <Text style={styles.addButtonText}>Добавить</Text>
+                        <Text style={styles.addButtonText} onPress={props.toCartLink}>Добавить</Text>
                     </TouchableOpacity>
                 </View>
             </View>
