@@ -38,7 +38,7 @@ const catalogReducer = (state = initialState, action) => {
             }
         }
         case TOGGLE_IS_FETCHING: {
-            console.log(action.isFetching)
+            console.log('Fetching data is ',action.isFetching)
             return  {
                 ...state, isFetching: action.isFetching,
             };
