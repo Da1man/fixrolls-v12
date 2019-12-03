@@ -26,37 +26,38 @@ const ProductItem = (props) => {
                         <Text style={styles.name}>{props.name}</Text>
                     </View>
 
-                </View>
-                <View style={styles.priceSection}>
-                    {props.discountPrice != null
-                        ? <><Text style={styles.priceOld}>{props.price} руб</Text><Text
-                            style={styles.priceSale}>{props.discountPrice} руб</Text></>
-                        : props.discountPrice === null && <Text style={styles.price}>{props.price} руб </Text>
-                    }
 
-                </View>
-                <View style={styles.addToCartSection}>
-                    <View style={styles.addCounter}>
-                        {
-                            props.count === 1
-                                ? <View style={styles.decrement}>
-                                    <Text style={styles.counterTextLock}>-</Text>
-                                </View>
-                                : <TouchableOpacity style={styles.decrement} onPress={props.decCount}>
-                                    <Text style={styles.counterText}>-</Text>
-                                </TouchableOpacity>
+                    <View style={styles.priceSection}>
+                        {props.discountPrice != null
+                            ? <><Text style={styles.priceOld}>{props.price} руб</Text><Text
+                                style={styles.priceSale}>{props.discountPrice} руб</Text></>
+                            : props.discountPrice === null && <Text style={styles.price}>{props.price} руб </Text>
                         }
 
-                        <View style={styles.counter}>
-                            <Text style={styles.counterText}>{props.count}</Text>
+                    </View>
+                    <View style={styles.addToCartSection}>
+                        <View style={styles.addCounter}>
+                            {
+                                props.count === 1
+                                    ? <View style={styles.decrement}>
+                                        <Text style={styles.counterTextLock}>-</Text>
+                                    </View>
+                                    : <TouchableOpacity style={styles.decrement} onPress={props.decCount}>
+                                        <Text style={styles.counterText}>-</Text>
+                                    </TouchableOpacity>
+                            }
+
+                            <View style={styles.counter}>
+                                <Text style={styles.counterText}>{props.count}</Text>
+                            </View>
+                            <TouchableOpacity style={styles.increment} onPress={props.incCount}>
+                                <Text style={styles.counterText}>+</Text>
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity style={styles.increment} onPress={props.incCount}>
-                            <Text style={styles.counterText}>+</Text>
+                        <TouchableOpacity style={styles.addButton} onPress={props.toCartLink}>
+                            <Text style={styles.addButtonText}>Добавить</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.addButton}>
-                        <Text style={styles.addButtonText} onPress={props.toCartLink}>Добавить</Text>
-                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -69,9 +70,13 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         paddingLeft: 15,
         paddingRight: 15,
+
     },
     container: {
         backgroundColor: 'white',
+        paddingBottom: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: "rgba(0,0,0,0.1)",
     },
     imageSection: {},
     imageInner: {
@@ -133,7 +138,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     addCounter: {
-        width: w / 2.4,
+        width: w / 2.3,
         borderColor: '#A5A5A5',
         borderWidth: 1,
         borderRadius: 8,
@@ -166,7 +171,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
     },
     addButton: {
-        width: w / 2.4,
+        width: w / 2.3,
         height: 42,
         borderRadius: 8,
         backgroundColor: '#4299A1',

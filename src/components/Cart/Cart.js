@@ -2,8 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image, TextInput} from 'react-native';
 import {w} from '../../constants';
 import EmptyCart from './Emptycart';
-
-
+import CartItem from './CartItem';
 
 const Cart = (props) => {
     return (
@@ -13,9 +12,30 @@ const Cart = (props) => {
                 <View style={styles.cartTitle}>
                     <Text style={styles.cartTitleText}>ВАША КОРЗИНА</Text>
                 </View>
-                <EmptyCart backLink={props.backLink} />
+                {props.cartProducts.length <= 1
+                    ? <EmptyCart backLink={props.backLink}/>
+                    : <>
+                        {props.cartProducts.map(p => <CartItem
+                            key={p.id}
+                            id={p.id}
+                            name={p.name}
+                            price={p.price}
+                            discountPrice={p.discountPrice}
+                            count={p.count}
+                            imageSrc={p.imageSrc}
+                            incCount={() => {
+                                props.incCount(p.id);
+                            }}
+                            decCount={() => {
+                                props.decCount(p.id);
+                            }}
+                        />)}
+                        <View style={styles.totalSection}>
+                            <Text style={styles.totalText}>Итого:</Text>
+                            <Text style={styles.totalCounter}>{props.total} руб</Text>
+                        </View>
+                    </>}
             </View>
-
         </View>
     );
 };
@@ -42,19 +62,23 @@ const styles = StyleSheet.create({
         color: '#A5A5A5',
         fontSize: 20,
     },
-    emptyCartSection: {
-        height: 115,
+    totalSection: {
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
     },
-    emptyCartText: {
-        color: '#A5A5A5',
-        fontSize: 24,
-        textTransform: 'uppercase',
+    totalText: {
+        fontFamily: 'DaysOne-Regular',
+        color: '#212121',
+        fontSize: 26,
+        marginRight: 20,
     },
-
-
+    totalCounter: {
+        fontFamily: 'DaysOne-Regular',
+        color: '#212121',
+        fontSize: 32,
+    },
 });
 
 export default Cart;
