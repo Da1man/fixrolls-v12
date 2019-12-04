@@ -27,14 +27,13 @@ let initialState = {
     total: 200,
 };
 
-let updateTotal = (cartProducts) => {
+let updateTotal = (state) => {
     let total = 0;
-    // for (let i = 0; i < cartProducts.length; i++) {
-    //     total += cartProducts[i].price * cartProducts[i].count
-    // }
-    cartProducts.map( p => total += p.price * p.count )
-
-    return total
+    state.cartProducts.map( p => total += p.price * p.count )
+    return {
+        ...state,
+        total
+    };
 }
 
 
@@ -43,9 +42,7 @@ let updateTotal = (cartProducts) => {
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case INC_COUNT: {
-            console.log('total', state.total)
-            console.log('upt total', updateTotal(state.cartProducts))
-            return {
+            const newState = {
                 ...state,
                 cartProducts: state.cartProducts.map(p => {
                     if (p.id === action.productId) {
@@ -53,20 +50,20 @@ const cartReducer = (state = initialState, action) => {
                     }
                     return p;
                 }),
-                total: updateTotal(state.cartProducts),
             };
+            return updateTotal(newState);
         }
         case DEC_COUNT: {
-            console.log('total', state.total)
-            return {
+            const newState = {
                 ...state,
                 cartProducts: state.cartProducts.map(p => {
-                    if (p.id === action.productId && p.count != 1) {
+                    if (p.id === action.productId) {
                         return {...p, count: p.count - 1};
                     }
                     return p;
                 }),
             };
+            return updateTotal(newState);
         }
 
         default:
