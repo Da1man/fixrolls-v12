@@ -1,5 +1,5 @@
-const INC_COUNT = 'INC_COUNT';
-const DEC_COUNT = 'DEC_COUNT';
+const INC_COUNT_CATALOG = 'INC_COUNT_CATALOG';
+const DEC_COUNT_CATALOG = 'DEC_COUNT_CATALOG';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const SET_PRODUCTS = 'SET_PRODUCTS';
 
@@ -10,7 +10,8 @@ let initialState = {
 
 const catalogReducer = (state = initialState, action) => {
     switch (action.type) {
-        case INC_COUNT: {
+        case INC_COUNT_CATALOG: {
+            console.log('aaaaa')
             return {
                 ...state,
                 products: state.products.map(p => {
@@ -21,7 +22,7 @@ const catalogReducer = (state = initialState, action) => {
                 }),
             };
         }
-        case DEC_COUNT: {
+        case DEC_COUNT_CATALOG: {
             return {
                 ...state,
                 products: state.products.map(p => {
@@ -49,8 +50,8 @@ const catalogReducer = (state = initialState, action) => {
     }
 };
 
-export const incCount = (productId) => ({type: INC_COUNT, productId});
-export const decCount = (productId) => ({type: DEC_COUNT, productId});
+export const incCount = (productId) => ({type: INC_COUNT_CATALOG, productId});
+export const decCount = (productId) => ({type: DEC_COUNT_CATALOG, productId});
 export const setProducts = (products) => ({type: SET_PRODUCTS, products });
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching: isFetching });
 
