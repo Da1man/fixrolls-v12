@@ -7,12 +7,11 @@ import CartItem from './CartItem';
 const Cart = (props) => {
     return (
         <View>
-
             <View style={styles.container}>
                 <View style={styles.cartTitle}>
                     <Text style={styles.cartTitleText}>ВАША КОРЗИНА</Text>
                 </View>
-                {props.cartProducts.length <= 1
+                {props.cartProducts.length < 1
                     ? <EmptyCart backLink={props.backLink}/>
                     : <>
                         {props.cartProducts.map(p => <CartItem

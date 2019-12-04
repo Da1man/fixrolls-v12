@@ -4,6 +4,11 @@ import {w} from '../../constants';
 import NewLabel from './NewLabel';
 import SaleLabel from './SaleLabel';
 
+let addButtonClicked = (props1) => {
+    props1.addToCart();
+    props1.toCartLink();
+}
+
 
 const ProductItem = (props) => {
     return (
@@ -54,7 +59,7 @@ const ProductItem = (props) => {
                                 <Text style={styles.counterText}>+</Text>
                             </TouchableOpacity>
                         </View>
-                        <TouchableOpacity style={styles.addButton} onPress={props.toCartLink}>
+                        <TouchableOpacity style={styles.addButton} onPress={() => addButtonClicked(props)}>
                             <Text style={styles.addButtonText}>Добавить</Text>
                         </TouchableOpacity>
                     </View>

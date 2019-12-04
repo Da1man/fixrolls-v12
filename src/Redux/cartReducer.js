@@ -1,42 +1,28 @@
 const INC_COUNT = 'INC_COUNT';
 const DEC_COUNT = 'DEC_COUNT';
+const ADD_TO_CART = 'ADD_TO_CART';
+import * as _ from 'lodash'
 
 
 let initialState = {
-    cartProducts: [
-        {
-            id: 1,
-            name: 'Теплый сет',
-            price: 100,
-            discountPrice: null,
-            count: 1,
-            imageSrc: 'https://fixrolls.ru/wp-content/uploads/2019/11/HOTSET.jpg',
-
-        },
-        {
-            id: 2,
-            name: 'Апельсин Ролл',
-            price: 100,
-            discountPrice: null,
-            count: 1,
-            imageSrc: 'https://fixrolls.ru/wp-content/uploads/2019/11/HOTSET.jpg',
-        },
-
-    ],
+    cartProducts: [],
     isFetching: false,
-    total: 200,
+    total: 0,
 };
 
 let updateTotal = (state) => {
     let total = 0;
-    state.cartProducts.map( p => total += p.price * p.count )
+
+    state.cartProducts.map(p => {
+        p.discountPrice != null
+            ? total += p.discountPrice * p.count
+            : total += p.price * p.count;
+    });
     return {
         ...state,
-        total
+        total: total,
     };
-}
-
-
+};
 
 
 const cartReducer = (state = initialState, action) => {
@@ -65,6 +51,13 @@ const cartReducer = (state = initialState, action) => {
             };
             return updateTotal(newState);
         }
+        case ADD_TO_CART: {
+            const newProduct = _.cloneDeep(action.product)
+            const newState = {
+                ...state, cartProducts: [...state.cartProducts, newProduct]
+            }
+            return updateTotal(newState);
+        }
 
         default:
             return state;
@@ -73,6 +66,7 @@ const cartReducer = (state = initialState, action) => {
 
 export const incCount = (productId) => ({type: INC_COUNT, productId});
 export const decCount = (productId) => ({type: DEC_COUNT, productId});
+export const addToCart = (product) => ({type: ADD_TO_CART, product});
 
 
 export default cartReducer;

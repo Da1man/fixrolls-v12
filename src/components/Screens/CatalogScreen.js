@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import {decCount, incCount, setProducts, toggleIsFetching} from '../../Redux/catalogReducer';
 import {ApiConnect} from '../../WooCommerceApi';
 import Preloader from '../common/Preloader';
+import {addToCart} from '../../Redux/cartReducer';
+import * as _ from 'lodash'
 
 class CatalogScreen extends React.Component {
 
@@ -54,6 +56,7 @@ class CatalogScreen extends React.Component {
                                 this.props.decCount(p.id);
                             }}
                             toCartLink={()=> this.props.navigation.navigate('Cart')}
+                            addToCart={() => this.props.addToCart(p)}
                         />)
                     }
                 </ScrollView>
@@ -74,4 +77,6 @@ export default connect(mapStateToProps, {
     decCount,
     setProducts,
     toggleIsFetching,
+    addToCart,
+
 })(CatalogScreen);
