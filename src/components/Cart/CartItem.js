@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginTop: 20,
     },
     addCounter: {
         width: w / 2.3,

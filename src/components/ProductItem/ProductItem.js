@@ -5,6 +5,7 @@ import NewLabel from './NewLabel';
 import SaleLabel from './SaleLabel';
 
 let addButtonClicked = (props1) => {
+    props1.toggleIsInCart();
     props1.addToCart();
     props1.toCartLink();
 }
@@ -59,9 +60,14 @@ const ProductItem = (props) => {
                                 <Text style={styles.counterText}>+</Text>
                             </TouchableOpacity>
                         </View>
-                        <TouchableOpacity style={styles.addButton} onPress={() => addButtonClicked(props)}>
-                            <Text style={styles.addButtonText}>Добавить</Text>
-                        </TouchableOpacity>
+                        {props.isInCart === false
+                            ? <TouchableOpacity style={styles.addButton} onPress={() => addButtonClicked(props)}>
+                                <Text style={styles.addButtonText}>Добавить</Text>
+                            </TouchableOpacity>
+                            : <TouchableOpacity style={styles.addButtonMore} onPress={() => addButtonClicked(props)}>
+                                <Text style={styles.addButtonText}>Еще</Text>
+                            </TouchableOpacity>
+                        }
                     </View>
                 </View>
             </View>
@@ -103,6 +109,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
+        marginTop: 20,
 
     },
     name: {
@@ -180,6 +187,15 @@ const styles = StyleSheet.create({
         height: 42,
         borderRadius: 8,
         backgroundColor: '#4299A1',
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 10,
+    },
+    addButtonMore: {
+        width: w / 2.3,
+        height: 42,
+        borderRadius: 8,
+        backgroundColor: '#EE3B51',
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 10,

@@ -3,7 +3,7 @@ import {ScrollView, Text, View} from 'react-native';
 import SearchBar from '../SearchBar/SearchBar';
 import ProductItem from '../ProductItem/ProductItem';
 import {connect} from 'react-redux';
-import {decCount, incCount, setProducts, toggleIsFetching} from '../../Redux/catalogReducer';
+import {decCount, incCount, setProducts, toggleIsFetching, toggleIsInCart} from '../../Redux/catalogReducer';
 import {ApiConnect} from '../../WooCommerceApi';
 import Preloader from '../common/Preloader';
 import {addToCart} from '../../Redux/cartReducer';
@@ -27,6 +27,7 @@ class CatalogScreen extends React.Component {
                     count: 1,
                     isNew: product.meta_data[1].value === 'yes' ? true : false,
                     imageSrc: product.images[0].src,
+                    isInCart: false,
                 }));
                 this.props.setProducts(list);
                 this.props.toggleIsFetching(false);
@@ -48,6 +49,7 @@ class CatalogScreen extends React.Component {
                             discountPrice={p.discountPrice}
                             count={p.count}
                             isNew={p.isNew}
+                            isInCart={p.isInCart}
                             imageSrc={p.imageSrc}
                             incCount={() => {
                                 this.props.incCount(p.id);
@@ -57,6 +59,7 @@ class CatalogScreen extends React.Component {
                             }}
                             toCartLink={()=> this.props.navigation.navigate('Cart')}
                             addToCart={() => this.props.addToCart(p)}
+                            toggleIsInCart = {() => this.props.toggleIsInCart(p.id)}
                         />)
                     }
                 </ScrollView>
@@ -78,5 +81,6 @@ export default connect(mapStateToProps, {
     setProducts,
     toggleIsFetching,
     addToCart,
+    toggleIsInCart,
 
 })(CatalogScreen);

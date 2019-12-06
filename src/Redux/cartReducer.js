@@ -28,7 +28,6 @@ let updateTotal = (state) => {
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case INC_COUNT_CART: {
-            console.log('aaaaa')
             const newState = {
                 ...state,
                 cartProducts: state.cartProducts.map(p => {
@@ -53,14 +52,30 @@ const cartReducer = (state = initialState, action) => {
             return updateTotal(newState);
         }
         case ADD_TO_CART: {
-           // const newProduct = _.cloneDeep(action.product)
-            const newState = {
-                ...state, cartProducts: [...state.cartProducts, action.product]
+            // const newProduct = _.cloneDeep(action.product)
+            if (_.findIndex(state.cartProducts, {id: action.product.id}) != -1) {
+                const newState = {
+                    ...state, cartProducts: state.cartProducts.map(p => {
+                        if (p.id === action.product.id) {
+                            return {...p, count: p.count + action.product.count};
+                        }
+                        return p;
+                    }),
+                };
+                return updateTotal(newState);
+            } else {
+                const newState = {
+                    ...state, cartProducts: [...state.cartProducts, action.product]
+                };
+                return updateTotal(newState);
             }
-            return updateTotal(newState);
+            // const newState = {
+            //     ...state, cartProducts: [...state.cartProducts, action.product]
+            // }
+
         }
         case DELETE_FROM_CART: {
-            return  state
+            return state
         }
 
 
