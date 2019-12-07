@@ -10,7 +10,7 @@ const EmptyCart = (props) => {
                 <Text style={styles.emptyCartText}>Корзина Пустая</Text>
             </View>
             <View style={styles.backToCatalogButtonSection}>
-                <TouchableOpacity style={styles.backToCatalogButton} onPress={props.backLink}>
+                <TouchableOpacity style={styles.backToCatalogButton} onPress={props.toCatalogLink}>
                     <Text style={styles.backToCatalogText}>В Каталог</Text>
                 </TouchableOpacity>
             </View>

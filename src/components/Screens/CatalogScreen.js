@@ -59,7 +59,7 @@ class CatalogScreen extends React.Component {
                             }}
                             toCartLink={()=> this.props.navigation.navigate('Cart')}
                             addToCart={() => this.props.addToCart(p)}
-                            toggleIsInCart = {() => this.props.toggleIsInCart(p.id)}
+                            toggleIsInCart = {() => this.props.toggleIsInCart(p.id, true)}
                         />)
                     }
                 </ScrollView>

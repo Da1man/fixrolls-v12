@@ -2,6 +2,12 @@ import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {w} from '../../constants';
 
+let deleteButtonClicked = (props1) => {
+    props1.toggleIsInCart();
+    props1.deleteFromCart();
+    // props1.toCatalogLink();
+}
+
 
 const CartItem = (props) => {
     return (
@@ -40,7 +46,7 @@ const CartItem = (props) => {
                         <Text style={styles.counterText}>+</Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.deleteButton} onPress={props.toCartLink}>
+                <TouchableOpacity style={styles.deleteButton} onPress={() =>{deleteButtonClicked(props)}}>
                     <Text style={styles.deleteButtonText}>Удалить</Text>
                 </TouchableOpacity>
             </View>

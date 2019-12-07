@@ -69,13 +69,17 @@ const cartReducer = (state = initialState, action) => {
                 };
                 return updateTotal(newState);
             }
-            // const newState = {
-            //     ...state, cartProducts: [...state.cartProducts, action.product]
-            // }
-
         }
         case DELETE_FROM_CART: {
-            return state
+
+            const deleteIndex = _.findIndex(state.cartProducts, {id: action.productId});
+            const newCartProducts = [...state.cartProducts]
+            newCartProducts.splice(deleteIndex,1)
+            const newState = {
+                ...state,
+                cartProducts: newCartProducts,
+            }
+            return updateTotal(newState);
         }
 
 

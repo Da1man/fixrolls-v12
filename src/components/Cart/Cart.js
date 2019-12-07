@@ -3,6 +3,7 @@ import {Text, View, StyleSheet, TouchableOpacity, Image, TextInput} from 'react-
 import {w} from '../../constants';
 import EmptyCart from './Emptycart';
 import CartItem from './CartItem';
+import {toggleIsInCart} from "../../Redux/catalogReducer";
 
 const Cart = (props) => {
     return (
@@ -12,7 +13,7 @@ const Cart = (props) => {
                     <Text style={styles.cartTitleText}>ВАША КОРЗИНА</Text>
                 </View>
                 {props.cartProducts.length < 1
-                    ? <EmptyCart backLink={props.backLink}/>
+                    ? <EmptyCart toCatalogLink={props.toCatalogLink}/>
                     : <>
                         {props.cartProducts.map(p => <CartItem
                             key={p.id}
@@ -28,6 +29,9 @@ const Cart = (props) => {
                             decCount={() => {
                                 props.decCount(p.id);
                             }}
+                            deleteFromCart={()=>{props.deleteFromCart(p.id)}}
+                            toCatalogLink={props.toCatalogLink}
+                            toggleIsInCart={() => props.toggleIsInCart(p.id, false)}
                         />)}
                         <View style={styles.totalSection}>
                             <Text style={styles.totalText}>Итого:</Text>

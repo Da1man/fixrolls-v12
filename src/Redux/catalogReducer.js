@@ -40,13 +40,11 @@ const catalogReducer = (state = initialState, action) => {
             }
         }
         case TOGGLE_IS_IN_CART: {
-            console.log('ProductID is in cart -', action.productId)
-            console.log(state.products[_.findIndex(state.products, {id: action.productId})])
             return {
                 ...state,
                 products: state.products.map(p => {
                     if (p.id === action.productId) {
-                        return {...p, isInCart: true};
+                        return {...p, isInCart: action.isInCart};
                     }
                     return p;
                 }),
@@ -69,7 +67,7 @@ export const incCount = (productId) => ({type: INC_COUNT_CATALOG, productId});
 export const decCount = (productId) => ({type: DEC_COUNT_CATALOG, productId});
 export const setProducts = (products) => ({type: SET_PRODUCTS, products });
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching: isFetching });
-export const toggleIsInCart = (productId) => ({type: TOGGLE_IS_IN_CART, productId})
+export const toggleIsInCart = (productId, isInCart) => ({type: TOGGLE_IS_IN_CART, productId, isInCart})
 
 
 
