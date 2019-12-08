@@ -21,7 +21,7 @@ class App extends React.Component {
     render() {
         return (
             <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-                <StatusBar backgroundColor={'white'} barStyle={'dark-content'} hidden={false}/>
+                <StatusBar backgroundColor={'white'} barStyle={'dark-content'} hidden={true}/>
                 <Provider store={store}>
                     <Header/>
                     <RootScreen/>

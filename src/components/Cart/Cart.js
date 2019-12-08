@@ -3,9 +3,12 @@ import {Text, View, StyleSheet, TouchableOpacity, Image, TextInput} from 'react-
 import {w} from '../../constants';
 import EmptyCart from './Emptycart';
 import CartItem from './CartItem';
-import {toggleIsInCart} from "../../Redux/catalogReducer";
+import OrderForm from './OrderForm';
 
 const Cart = (props) => {
+    let {name, deliveryAdress, districts,selectedDistrict , phone, email, comment,
+        updateOrderName, updateOrderAdres, updateOrderPhone, updateOrderEmail, updateOrderComment, updateOrderDistrict,
+        billingMethods, selectedBillingMethod, updateOrderBillingMethod, confirmOrder} = props
     return (
         <View>
             <View style={styles.container}>
@@ -37,6 +40,25 @@ const Cart = (props) => {
                             <Text style={styles.totalText}>Итого:</Text>
                             <Text style={styles.totalCounter}>{props.total} руб</Text>
                         </View>
+                        <OrderForm
+                            name={name}
+                            deliveryAdress={deliveryAdress}
+                            districts={districts}
+                            selectedDistrict={selectedDistrict}
+                            phone={phone}
+                            email={email}
+                            comment={comment}
+                            updateOrderName={updateOrderName}
+                            updateOrderAdres={updateOrderAdres}
+                            updateOrderPhone={updateOrderPhone}
+                            updateOrderEmail={updateOrderEmail}
+                            updateOrderComment={updateOrderComment}
+                            updateOrderDistrict={updateOrderDistrict}
+                            billingMethods={billingMethods}
+                            selectedBillingMethod={selectedBillingMethod}
+                            updateOrderBillingMethod={updateOrderBillingMethod}
+                            confirmOrder={confirmOrder}
+                        />
                     </>}
             </View>
         </View>
@@ -70,6 +92,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
+        marginBottom: 20,
     },
     totalText: {
         fontFamily: 'DaysOne-Regular',

@@ -27,7 +27,7 @@ const ProductItem = (props) => {
                         <View style={styles.labelSection}>
                             {props.isNew && <NewLabel />}
                             {props.discountPrice != null && <SaleLabel />}
-                            {props.x2 != false && <X2Label />}
+                            {props.isX2  && <X2Label />}
                         </View>
                     </View>
                     <View style={styles.nameSection}>
