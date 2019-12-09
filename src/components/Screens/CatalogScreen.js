@@ -18,6 +18,7 @@ class CatalogScreen extends React.Component {
             category: '88',
         })
             .then((response) => {
+                console.log(response)
                 let list = [];
                 response.map(product => list.push({
                     id: product.id,
@@ -28,9 +29,11 @@ class CatalogScreen extends React.Component {
                     isNew: product.meta_data[1].value === 'yes' ? true : false,
                     imageSrc: product.images[0].src,
                     isInCart: false,
+                    isX2: product.attributes.length === 0 ? false : product.attributes[0].name === 'x2' ? true : false
                 }));
                 this.props.setProducts(list);
                 this.props.toggleIsFetching(false);
+                console.log(this.props.products)
             });
     };
 

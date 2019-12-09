@@ -3,6 +3,7 @@ import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {w} from '../../constants';
 import NewLabel from './NewLabel';
 import SaleLabel from './SaleLabel';
+import X2Label from './X2Label';
 
 let addButtonClicked = (props1) => {
     props1.toggleIsInCart();
@@ -24,8 +25,9 @@ const ProductItem = (props) => {
                             />
                         </View>
                         <View style={styles.labelSection}>
-                            {props.isNew && <NewLabel/>}
-                            {props.discountPrice != null && <SaleLabel/>}
+                            {props.isNew && <NewLabel />}
+                            {props.discountPrice != null && <SaleLabel />}
+                            {props.x2 != false && <X2Label />}
                         </View>
                     </View>
                     <View style={styles.nameSection}>
