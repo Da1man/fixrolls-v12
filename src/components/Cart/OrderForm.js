@@ -10,8 +10,8 @@ import {
     confirmOrder,
     updateOrderAdres, updateOrderBillingMethod, updateOrderComment, updateOrderDistrict, updateOrderEmail,
     updateOrderName,
-    updateOrderPhone
-} from "../../Redux/cartReducer";
+    updateOrderPhone, validateFields,
+} from '../../Redux/cartReducer';
 
 let nameInput = React.createRef();
 let adresInput = React.createRef();
@@ -27,12 +27,19 @@ let onSubmit = () => {
 };
 
 
-const OrderForm = (props) => {
+class OrderForm extends React.Component {
+
+    componentDidMount() {
+        this.props.validateFields();
+    }
+
+
+render() {
     let {
         name, deliveryAdress, districts, selectedDistrict, phone, email, comment,
         updateOrderName, updateOrderAdres, updateOrderPhone, updateOrderEmail, updateOrderComment, updateOrderDistrict,
-        billingMethods, selectedBillingMethod, updateOrderBillingMethod, confirmOrder
-    } = props;
+        billingMethods, selectedBillingMethod, updateOrderBillingMethod, confirmOrder, validateErrors
+    } = this.props;
     return (
         <View>
             <View style={styles.orderFormContainer}>
@@ -43,10 +50,12 @@ const OrderForm = (props) => {
                     ref={nameInput}
                     value={name}
                     label={'Ваше имя'}
+                    blurOnSubmit={true}
                     tintColor={'#4299A1'}
                     characterRestriction={40}
                     onSubmitEditing={onSubmit}
                     onChangeText={(name) => updateOrderName(name)}
+                    error={validateErrors.name}
                 />
                 <TextField
                     ref={adresInput}
@@ -55,6 +64,7 @@ const OrderForm = (props) => {
                     tintColor={'#4299A1'}
                     characterRestriction={40}
                     onChangeText={(adres) => updateOrderAdres(adres)}
+                    error={validateErrors.deliveryAdress}
                 />
                 <Dropdown
                     ref={districtInput}
@@ -62,19 +72,24 @@ const OrderForm = (props) => {
                     label={'Район доставки'}
                     data={districts}
                     onChangeText={(district) => updateOrderDistrict(district)}
+                    error={validateErrors.selectedDistrict}
                 />
                 <TextField
                     ref={phoneInput}
                     value={phone}
                     label={'Ваш телефон'}
+                    keyboardType={'phone-pad'}
                     tintColor={'#4299A1'}
                     characterRestriction={20}
                     onChangeText={(phone) => updateOrderPhone(phone)}
+                    error={validateErrors.phone}
                 />
                 <TextField
                     ref={mailInput}
                     value={email}
                     label={'Ваш Email'}
+                    keyboardType='email-address'
+                    autoCapitalize='none'
                     tintColor={'#4299A1'}
                     characterRestriction={40}
                     onChangeText={(mail) => updateOrderEmail(mail)}
@@ -96,6 +111,7 @@ const OrderForm = (props) => {
                     label={'Метод оплаты'}
                     data={billingMethods}
                     onChangeText={(method) => updateOrderBillingMethod(method)}
+                    error={validateErrors.selectedBillingMethod}
                 />
             </View>
             <View>
@@ -105,6 +121,7 @@ const OrderForm = (props) => {
             </View>
         </View>
     );
+}
 };
 
 
@@ -157,6 +174,7 @@ let mapStateToProps = (state) => {
         comment: state.cart.comment,
         billingMethods: state.cart.billingMethods,
         selectedBillingMethod: state.cart.selectedBillingMethod,
+        validateErrors: state.cart.validateErrors,
     };
 };
 
@@ -169,5 +187,6 @@ export default connect(mapStateToProps, {
     updateOrderDistrict,
     updateOrderBillingMethod,
     confirmOrder,
+    validateFields,
 })(OrderForm);
 

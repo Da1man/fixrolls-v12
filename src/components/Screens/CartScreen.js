@@ -25,15 +25,15 @@ class CartScreen extends React.Component {
                 console.log('Getting Billing Methods end');
             });
 
-        console.log('Getting List of Districts start');
-        ApiConnect.get('data', {
-            per_page: 100,
-        })
-            .then((response) => {
-                console.log(response);
-
-                console.log('Getting List of Districts end');
-            });
+        // console.log('Getting List of Districts start');
+        // ApiConnect.get('orders', {
+        //     per_page: 100,
+        // })
+        //     .then((response) => {
+        //         console.log(response);
+        //
+        //         console.log('Getting List of Districts end');
+        //     });
     };
 
     render() {

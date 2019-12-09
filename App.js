@@ -14,6 +14,7 @@ import CatalogScreen from './src/components/Screens/CatalogScreen';
 import CartScreen from './src/components/Screens/CartScreen';
 import {Provider} from 'react-redux';
 import store from './src/Redux/store';
+import IconBadge from './src/components/common/IconBadge';
 
 
 class App extends React.Component {
@@ -47,7 +48,7 @@ const BottomTabNavigator = createMaterialTopTabNavigator(
             navigationOptions: {
                 title: 'cart',
                 tabBarLabel: 'Корзина',
-                tabBarIcon: ({tintColor}) => (<Icon name='shopping-cart' size={25} color={tintColor}/>),
+                tabBarIcon: ({tintColor}) => (<IconBadge color={tintColor} />),
             },
         },
     },

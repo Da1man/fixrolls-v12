@@ -1,4 +1,4 @@
-import {ApiConnect} from "../WooCommerceApi";
+import {ApiConnect} from '../WooCommerceApi';
 
 const INC_COUNT_CART = 'INC_COUNT_CART';
 const DEC_COUNT_CART = 'DEC_COUNT_CART';
@@ -13,12 +13,14 @@ const UPDATE_ORDER_DISTRICT = 'UPDATE_ORDER_DISTRICT';
 const UPDATE_ORDER_BILLING_METHOD = 'UPDATE_ORDER_BILLING_METHOD';
 const SET_BILLING_METHODS = 'SET_BILLING_METHODS';
 const CONFIRM_ORDER = 'CONFIRM_ORDER';
+const VALIDATE_FIELDS = 'VALIDATE_FIELDS';
 import * as _ from 'lodash';
 
 
 let initialState = {
     cartProducts: [],
     total: 0,
+    cartCounter: 0,
     name: '',
     deliveryAdress: '',
     districts: [
@@ -34,20 +36,33 @@ let initialState = {
     email: '',
     comment: '',
     orderObject: {},
+    validateErrors: {
+        name: '',
+        deliveryAdress: '',
+        selectedDistrict: '',
+        selectedBillingMethod: '',
+        phone: '',
+    },
 
 };
 
 let updateTotal = (state) => {
     let total = 0;
+    let counter = 0;
 
     state.cartProducts.map(p => {
         p.discountPrice != null
             ? total += p.discountPrice * p.count
             : total += p.price * p.count;
     });
+    state.cartProducts.map(p => {
+        counter += p.count;
+    });
     return {
         ...state,
         total: total,
+        cartCounter: counter,
+
     };
 };
 
@@ -110,22 +125,29 @@ const cartReducer = (state = initialState, action) => {
         }
         case UPDATE_ORDER_NAME: {
             return {
-                ...state, name: action.name,
+                ...state,
+                name: action.name,
+                validateErrors: {...state.validateErrors, name: action.name.length <=0 ? 'Не должно быть пустым' : '' }
             };
         }
         case UPDATE_ORDER_ADRES: {
             return {
-                ...state, deliveryAdress: action.adres,
+                ...state,
+                deliveryAdress: action.adres,
+                validateErrors: {...state.validateErrors, deliveryAdress: action.adres.length <=0 ? 'Не должно быть пустым' : '' }
             };
         }
         case UPDATE_ORDER_PHONE: {
             return {
-                ...state, phone: action.phone,
+                ...state,
+                phone: action.phone,
+                validateErrors: {...state.validateErrors, phone: action.phone.length <=0 ? 'Не должно быть пустым' : '' }
             };
         }
         case UPDATE_ORDER_EMAIL: {
             return {
-                ...state, email: action.email,
+                ...state,
+                email: action.email,
             };
         }
         case UPDATE_ORDER_COMMENT: {
@@ -136,19 +158,34 @@ const cartReducer = (state = initialState, action) => {
         case UPDATE_ORDER_DISTRICT: {
             console.log(action.district);
             return {
-                ...state, selectedDistrict: action.district,
+                ...state,
+                selectedDistrict: action.district,
+                validateErrors: {...state.validateErrors, selectedDistrict: action.district.length <=0 ? 'Не должно быть пустым' : '' }
             };
         }
         case UPDATE_ORDER_BILLING_METHOD: {
             console.log(action.method);
             return {
-                ...state, selectedBillingMethod: action.method,
+                ...state,
+                selectedBillingMethod: action.method,
+                validateErrors: {...state.validateErrors, selectedBillingMethod: action.method.length <=0 ? 'Не должно быть пустым' : '' }
             };
         }
         case SET_BILLING_METHODS: {
             return {
                 ...state, billingMethods: action.methods,
             };
+        }
+        case VALIDATE_FIELDS: {
+            return { ...state,
+                validateErrors: {...state.validateErrors,
+                    name: state.validateErrors.name.length <=0 ? 'Не должно быть пустым' : '',
+                    deliveryAdress: state.validateErrors.deliveryAdress.length <=0 ? 'Не должно быть пустым' : '',
+                    phone: state.validateErrors.phone.length <=0 ? 'Не должно быть пустым' : '',
+                    selectedDistrict: state.validateErrors.selectedDistrict.length <=0 ? 'Не должно быть пустым' : '',
+                    selectedBillingMethod: state.validateErrors.selectedBillingMethod.length <=0 ? 'Не должно быть пустым' : ''
+                }
+            }
         }
         case CONFIRM_ORDER: {
             const newLineItems = [];
@@ -172,29 +209,25 @@ const cartReducer = (state = initialState, action) => {
                     phone: state.phone,
                 },
                 shipping: {
-                    first_name: "",
-                    last_name: "",
-                    address_1: "",
-                    address_2: "",
-                    city: "",
-                    state: "",
-                    postcode: "",
-                    country: ""
+                    first_name: '',
+                    last_name: '',
+                    address_1: '',
+                    address_2: '',
+                    city: '',
+                    state: '',
+                    postcode: '',
+                    country: '',
                 },
                 line_items: newLineItems,
-                shipping_lines: {
-                    method_id: "",
-                    method_title: "",
-                    total: 0,
-                },
+                shipping_lines: [],
             };
             console.log(newOrderObject);
-            console.log('Creacte an order start');
-            ApiConnect.post('orders', newOrderObject, {})
-                .then((response) => {
-                    console.log(response);
-                    console.log('Creacte an orde end');
-                });
+            // console.log('Create an order start');
+            // ApiConnect.post('orders', newOrderObject, {})
+            //     .then((response) => {
+            //         console.log(response);
+            //         console.log('Create an order end');
+            //     });
             return {
                 ...state, orderObject: newOrderObject,
             };
@@ -219,6 +252,7 @@ export const updateOrderDistrict = (district) => ({type: UPDATE_ORDER_DISTRICT, 
 export const updateOrderBillingMethod = (method) => ({type: UPDATE_ORDER_BILLING_METHOD, method});
 export const setBillingMethods = (methods) => ({type: SET_BILLING_METHODS, methods});
 export const confirmOrder = () => ({type: CONFIRM_ORDER});
+export const validateFields = () => ({type: VALIDATE_FIELDS});
 
 
 export default cartReducer;
