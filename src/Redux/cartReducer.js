@@ -149,6 +149,8 @@ const cartReducer = (state = initialState, action) => {
             };
         }
         case CONFIRM_ORDER: {
+            const newLineItems = [];
+            state.cartProducts.map((item) => newLineItems.push({product_id: item.id, quantity: item.count}));
             const newOrderObject = {
                 payment_method: state.selectedBillingMethod === 'Оплата курьеру наличными'
                     ? 'cod'
@@ -177,7 +179,12 @@ const cartReducer = (state = initialState, action) => {
                     postcode: "",
                     country: ""
                 },
-                line_items: [...state.cartProducts]
+                line_items: newLineItems,
+                shipping_lines: {
+                    method_id: "",
+                    method_title: "",
+                    total: 0,
+                },
             };
             console.log(newOrderObject);
             return {
