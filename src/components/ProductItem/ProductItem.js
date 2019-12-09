@@ -5,14 +5,15 @@ import NewLabel from './NewLabel';
 import SaleLabel from './SaleLabel';
 import X2Label from './X2Label';
 
-let addButtonClicked = (props1) => {
-    props1.toggleIsInCart();
-    props1.addToCart();
-    props1.toCartLink();
+let addButtonClicked = (props) => {
+    props.toggleIsInCart();
+    props.addToCart();
+    props.toCartLink();
 }
 
 
 const ProductItem = (props) => {
+    let {imageSrc, isX2, isNew, discountPrice, name, price, count} = props;
     return (
         <View>
             <View style={styles.wrapper}>
@@ -20,33 +21,37 @@ const ProductItem = (props) => {
                     <View style={styles.imageSection}>
                         <View style={styles.imageInner}>
                             <Image style={styles.productImage}
-                                   source={{uri: props.imageSrc}}
+                                   source={{uri: imageSrc}}
                                    resizeMode={'cover'}
                             />
+                            {isX2 && <View style={styles.disclaimerBox}>
+                                <Text style={styles.disclaimerText}>*на фото представлена половина сета</Text>
+                            </View>}
+
                         </View>
                         <View style={styles.labelSection}>
-                            {props.isNew && <NewLabel />}
-                            {props.discountPrice != null && <SaleLabel />}
-                            {props.isX2  && <X2Label />}
+                            {isNew && <NewLabel/>}
+                            {discountPrice != null && <SaleLabel/>}
+                            {isX2 && <X2Label/>}
                         </View>
                     </View>
                     <View style={styles.nameSection}>
-                        <Text style={styles.name}>{props.name}</Text>
+                        <Text style={styles.name}>{name}</Text>
                     </View>
 
 
                     <View style={styles.priceSection}>
-                        {props.discountPrice != null
-                            ? <><Text style={styles.priceOld}>{props.price} руб</Text><Text
-                                style={styles.priceSale}>{props.discountPrice} руб</Text></>
-                            : props.discountPrice === null && <Text style={styles.price}>{props.price} руб </Text>
+                        {discountPrice != null
+                            ? <><Text style={styles.priceOld}>{price} руб</Text><Text
+                                style={styles.priceSale}>{discountPrice} руб</Text></>
+                            : discountPrice === null && <Text style={styles.price}>{price} руб </Text>
                         }
 
                     </View>
                     <View style={styles.addToCartSection}>
                         <View style={styles.addCounter}>
                             {
-                                props.count === 1
+                                count === 1
                                     ? <View style={styles.decrement}>
                                         <Text style={styles.counterTextLock}>-</Text>
                                     </View>
@@ -80,16 +85,21 @@ const ProductItem = (props) => {
 const styles = StyleSheet.create({
     wrapper: {
         width: w,
-        marginBottom: 20,
+        marginBottom: 40,
         paddingLeft: 15,
         paddingRight: 15,
 
     },
     container: {
         backgroundColor: 'white',
-        paddingBottom: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: "rgba(0,0,0,0.1)",
+        paddingBottom: 40,
+        //borderBottomWidth: 1,
+        //borderBottomColor: "rgba(0,0,0,0.1)",
+        elevation: 15,
+        borderRadius: 16,
+        paddingTop: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     imageSection: {},
     imageInner: {
@@ -99,6 +109,13 @@ const styles = StyleSheet.create({
     productImage: {
         width: '100%',
         height: w - 120,
+    },
+    disclaimerBox: {
+        paddingTop: 10,
+    },
+    disclaimerText: {
+        color: '#A5A5A5',
+        fontSize: 14,
     },
     labelSection: {
         display: 'flex',

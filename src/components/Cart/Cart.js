@@ -4,11 +4,12 @@ import {w} from '../../constants';
 import EmptyCart from './Emptycart';
 import CartItem from './CartItem';
 import OrderForm from './OrderForm';
+import {connect} from "react-redux";
+import {decCount, deleteFromCart, incCount, setBillingMethods} from "../../Redux/cartReducer";
+import {toggleIsInCart} from "../../Redux/catalogReducer";
 
 const Cart = (props) => {
-    let {name, deliveryAdress, districts,selectedDistrict , phone, email, comment,
-        updateOrderName, updateOrderAdres, updateOrderPhone, updateOrderEmail, updateOrderComment, updateOrderDistrict,
-        billingMethods, selectedBillingMethod, updateOrderBillingMethod, confirmOrder} = props
+    let {toCatalogLink, cartProducts, incCount, decCount, deleteFromCart, toggleIsInCart, total} = props;
     return (
         <View>
             <View style={styles.container}>
@@ -16,9 +17,9 @@ const Cart = (props) => {
                     <Text style={styles.cartTitleText}>ВАША КОРЗИНА</Text>
                 </View>
                 {props.cartProducts.length < 1
-                    ? <EmptyCart toCatalogLink={props.toCatalogLink}/>
+                    ? <EmptyCart toCatalogLink={toCatalogLink}/>
                     : <>
-                        {props.cartProducts.map(p => <CartItem
+                        {cartProducts.map(p => <CartItem
                             key={p.id}
                             id={p.id}
                             name={p.name}
@@ -27,38 +28,20 @@ const Cart = (props) => {
                             count={p.count}
                             imageSrc={p.imageSrc}
                             incCount={() => {
-                                props.incCount(p.id);
+                                incCount(p.id);
                             }}
                             decCount={() => {
-                                props.decCount(p.id);
+                                decCount(p.id);
                             }}
-                            deleteFromCart={()=>{props.deleteFromCart(p.id)}}
-                            toCatalogLink={props.toCatalogLink}
-                            toggleIsInCart={() => props.toggleIsInCart(p.id, false)}
+                            deleteFromCart={()=>{deleteFromCart(p.id)}}
+                            toCatalogLink={toCatalogLink}
+                            toggleIsInCart={() => toggleIsInCart(p.id, false)}
                         />)}
                         <View style={styles.totalSection}>
                             <Text style={styles.totalText}>Итого:</Text>
-                            <Text style={styles.totalCounter}>{props.total} руб</Text>
+                            <Text style={styles.totalCounter}>{total} руб</Text>
                         </View>
-                        <OrderForm
-                            name={name}
-                            deliveryAdress={deliveryAdress}
-                            districts={districts}
-                            selectedDistrict={selectedDistrict}
-                            phone={phone}
-                            email={email}
-                            comment={comment}
-                            updateOrderName={updateOrderName}
-                            updateOrderAdres={updateOrderAdres}
-                            updateOrderPhone={updateOrderPhone}
-                            updateOrderEmail={updateOrderEmail}
-                            updateOrderComment={updateOrderComment}
-                            updateOrderDistrict={updateOrderDistrict}
-                            billingMethods={billingMethods}
-                            selectedBillingMethod={selectedBillingMethod}
-                            updateOrderBillingMethod={updateOrderBillingMethod}
-                            confirmOrder={confirmOrder}
-                        />
+                        <OrderForm/>
                     </>}
             </View>
         </View>
@@ -107,4 +90,18 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Cart;
+let mapStateToProps = (state) => {
+    return {
+        cartProducts: state.cart.cartProducts,
+        total: state.cart.total,
+    };
+};
+
+export default connect(mapStateToProps, {
+    incCount,
+    decCount,
+    deleteFromCart,
+    toggleIsInCart,
+    setBillingMethods,
+})(Cart);
+

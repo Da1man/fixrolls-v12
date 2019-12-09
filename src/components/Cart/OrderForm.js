@@ -3,8 +3,15 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {TextField, OutlinedTextField} from 'react-native-material-textfield';
 import {Dropdown} from 'react-native-material-dropdown';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+
 import {w} from '../../constants';
+import {connect} from "react-redux";
+import {
+    confirmOrder,
+    updateOrderAdres, updateOrderBillingMethod, updateOrderComment, updateOrderDistrict, updateOrderEmail,
+    updateOrderName,
+    updateOrderPhone
+} from "../../Redux/cartReducer";
 
 let nameInput = React.createRef();
 let adresInput = React.createRef();
@@ -24,7 +31,7 @@ const OrderForm = (props) => {
     let {
         name, deliveryAdress, districts, selectedDistrict, phone, email, comment,
         updateOrderName, updateOrderAdres, updateOrderPhone, updateOrderEmail, updateOrderComment, updateOrderDistrict,
-        billingMethods, selectedBillingMethod, updateOrderBillingMethod,confirmOrder
+        billingMethods, selectedBillingMethod, updateOrderBillingMethod, confirmOrder
     } = props;
     return (
         <View>
@@ -78,9 +85,7 @@ const OrderForm = (props) => {
                     label={'Комментарий к заказу'}
                     tintColor={'#4299A1'}
                     characterRestriction={200}
-                    inputContainerStyle={{
-                        height: 200,
-                    }}
+                    inputContainerStyle={{}}
                     containerStyle={{}}
                     multiline={true}
                     onChangeText={(text) => updateOrderComment(text)}
@@ -98,8 +103,6 @@ const OrderForm = (props) => {
                     <Text style={styles.confirmButtonText}>Оформить заказ</Text>
                 </TouchableOpacity>
             </View>
-
-
         </View>
     );
 };
@@ -143,5 +146,28 @@ const styles = StyleSheet.create({
 
 });
 
+let mapStateToProps = (state) => {
+    return {
+        name: state.cart.name,
+        deliveryAdress: state.cart.deliveryAdress,
+        districts: state.cart.districts,
+        selectedDistrict: state.cart.selectedDistrict,
+        phone: state.cart.phone,
+        email: state.cart.email,
+        comment: state.cart.comment,
+        billingMethods: state.cart.billingMethods,
+        selectedBillingMethod: state.cart.selectedBillingMethod,
+    };
+};
 
-export default OrderForm;
+export default connect(mapStateToProps, {
+    updateOrderName,
+    updateOrderAdres,
+    updateOrderPhone,
+    updateOrderEmail,
+    updateOrderComment,
+    updateOrderDistrict,
+    updateOrderBillingMethod,
+    confirmOrder,
+})(OrderForm);
+

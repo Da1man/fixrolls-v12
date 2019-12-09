@@ -1,3 +1,5 @@
+import {ApiConnect} from "../WooCommerceApi";
+
 const INC_COUNT_CART = 'INC_COUNT_CART';
 const DEC_COUNT_CART = 'DEC_COUNT_CART';
 const ADD_TO_CART = 'ADD_TO_CART';
@@ -187,6 +189,12 @@ const cartReducer = (state = initialState, action) => {
                 },
             };
             console.log(newOrderObject);
+            console.log('Creacte an order start');
+            ApiConnect.post('orders', newOrderObject, {})
+                .then((response) => {
+                    console.log(response);
+                    console.log('Creacte an orde end');
+                });
             return {
                 ...state, orderObject: newOrderObject,
             };
