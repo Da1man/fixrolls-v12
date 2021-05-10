@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@woocommerce/woocommerce-rest-api": "^1.0.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "react": "16.9.0",
     "react-native": "0.61.2",
     "react-native-elements": "^1.2.7",
